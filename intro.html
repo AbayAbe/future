@@ -1,46 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Level 1</title>
+<title>Level 1 - Mission Briefing</title>
 <link rel="stylesheet" href="css/style.css">
-<script src="js/script.js"></script>
+<script src="js/script.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+body{text-align:center;margin:0;padding-top:80px;font-family:'Fredoka',sans-serif;color:#1f2937;overflow-x:hidden;}
+.container{width:85%;max-width:700px;margin:auto;background:white;padding:45px;border-radius:25px;box-shadow:0 15px 35px rgba(0,0,0,0.2);}
+.character{font-size:80px; display:block;margin-bottom:20px;animation: floatChar 3s ease-in-out infinite alternate;}
+@keyframes floatChar{0%{transform:translateY(0);}100%{transform:translateY(-15px);}}
+#typedText{font-size:18px; line-height:1.6;margin-top:20px;min-height:60px;}
+button{padding:14px 30px; font-size:18px; border:none; border-radius:14px; margin:10px; cursor:pointer; background:linear-gradient(135deg,#22c55e,#4ade80); color:white; font-weight:bold; transition:0.3s; box-shadow:0 6px 0 #15803d;}
+.noButton{background:linear-gradient(135deg,#ef4444,#f87171); box-shadow:0 6px 0 #991b1b;}
+button:hover{transform:translateY(-3px); box-shadow:0 6px 10px rgba(0,0,0,0.2);}
+@media(max-width:600px){.character{font-size:60px;}#typedText{font-size:16px;}button{font-size:16px;padding:12px 25px;}}
+.footprint{position:absolute;font-size:22px;animation:footMove 6s linear infinite; opacity:0.8;}
+@keyframes footMove{0%{transform:translateY(100vh) rotate(0deg);}100%{transform:translateY(-120px) rotate(360deg);}}
+</style>
 </head>
-
 <body>
 
 <div class="container">
-
-
-<div class="icon">🧭</div>
-
-<div class="progress">Level 1 / 4</div>
-
-<h2>Mission Briefing</h2>
-
-<p>
-Game ini sebenarnya dibuat
-karena ada sesuatu yang ingin aku sampaikan.
-</p>
-
-<p>
-Tapi ngomong langsung itu agak susah.
-</p>
-
-<p>
-Jadi aku bikin game kecil ini 😅
-</p>
-
-<a href="video.html">
-<button>Lanjut ke Level 2</button>
-</a>
-
-<button class="noButton" id="no" onmouseover="moveButton()">
-Aku menyerah
-</button>
-
+  <div class="character">🧭</div>
+  <div class="progress">Level 1 / 4</div>
+  <h2>Mission Briefing</h2>
+  <p id="typedText"></p>
+  <a href="video.html"><button>Lanjut ke Level 2</button></a>
+  <button class="noButton" id="no" onmouseover="moveButton()">Aku menyerah</button>
 </div>
 
+<script>
+// typing
+const text1="Game ini sebenarnya dibuat karena ada sesuatu yang ingin aku sampaikan. Tapi ngomong langsung agak susah, jadi aku bikin game kecil ini 😅";
+let i=0; const typedText1=document.getElementById("typedText");
+function type1(){if(i<text1.length){typedText1.innerHTML+=text1.charAt(i);i++;setTimeout(type1,40);}} type1();
+
+// jejak kaki
+for(let i=0;i<15;i++){let fp=document.createElement("div"); fp.innerHTML="🐾"; fp.className="footprint"; fp.style.left=Math.random()*100+"vw"; fp.style.animationDuration=(Math.random()*5+5)+"s"; document.body.appendChild(fp);}
+
+// tombol no
+function moveButton(){
+    var button=document.getElementById("no");
+    var maxX=window.innerWidth-button.offsetWidth-20;
+    var maxY=window.innerHeight-button.offsetHeight-20;
+    var x=Math.random()*maxX; var y=Math.random()*maxY;
+    button.style.position="absolute"; button.style.left=x+"px"; button.style.top=y+"px";
+}
+</script>
 </body>
 </html>
