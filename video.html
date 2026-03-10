@@ -1,45 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Level 2</title>
+<title>Level 2 - Memory Unlock</title>
 <link rel="stylesheet" href="css/style.css">
-<script src="js/script.js"></script>
+<script src="js/script.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+body{text-align:center;margin:0;padding-top:80px;font-family:'Fredoka',sans-serif;color:#1f2937;overflow-x:hidden;}
+.container{width:85%;max-width:700px;margin:auto;background:white;padding:45px;border-radius:25px;box-shadow:0 15px 35px rgba(0,0,0,0.2);}
+.character{font-size:80px; display:block;margin-bottom:20px;animation: floatChar 3s ease-in-out infinite alternate;}
+@keyframes floatChar{0%{transform:translateY(0);}100%{transform:translateY(-15px);}}
+#typedText{font-size:18px; line-height:1.6;margin-top:20px;min-height:60px;}
+button{padding:14px 30px; font-size:18px; border:none; border-radius:14px; margin:10px; cursor:pointer; background:linear-gradient(135deg,#22c55e,#4ade80); color:white; font-weight:bold; transition:0.3s; box-shadow:0 6px 0 #15803d;}
+button:hover{transform:translateY(-3px); box-shadow:0 6px 10px rgba(0,0,0,0.2);}
+@media(max-width:600px){.character{font-size:60px;}#typedText{font-size:16px;}button{font-size:16px;padding:12px 25px;}}
+.camera{position:absolute;font-size:25px; animation:camMove linear infinite; opacity:0.8;}
+@keyframes camMove{0%{transform:translateY(100vh) rotate(0deg);}100%{transform:translateY(-120px) rotate(360deg);}}
+</style>
 </head>
-
 <body>
 
 <div class="container">
+  <div class="character">🎬</div>
+  <div class="progress">Level 2 / 4</div>
+  <h2>Memory Unlock</h2>
+  <p id="typedText"></p>
 
-<div class="icon">🎬</div>
+  <a href="https://drive.google.com/drive/u/0/folders/1Fo58Qr3IgZCwRKWfbdZ2fbXeai2oRrcB" target="_blank">
+    <button>Tonton Video 🎥</button>
+  </a>
 
-<div class="progress">Level 2 / 4</div>
-
-<h2>Memory Unlock</h2>
-
-<p>
-Di level ini kamu harus membuka
-sebuah kenangan lama.
-</p>
-
-<p>
-Aku udah ngebuat video ini dari lama sebenernya,
-tapi aku gatau sebenernya bisa gak sih video ini sampai
-ke kamu.
-</p>
-
-<a href="https://drive.google.com/drive/u/0/folders/1Fo58Qr3IgZCwRKWfbdZ2fbXeai2oRrcB" target="_blank">
-<button>Tonton Video 🎥</button>
-</a>
-
-<br><br>
-
-<a href="lagu.html">
-<button>Level Selesai ➜</button>
-</a>
-
+  <br><br>
+  <a href="lagu.html">
+    <button>Level Selesai ➜</button>
+  </a>
 </div>
 
+<script>
+// typing
+const text2="Di level ini kamu harus membuka sebuah kenangan lama. Aku udah ngebuat video ini dari lama, tapi aku gatau sebenernya bisa gak sampai ke kamu.";
+let k=0; const typedText2=document.getElementById("typedText");
+function type2(){if(k<text2.length){typedText2.innerHTML+=text2.charAt(k);k++;setTimeout(type2,40);}} type2();
+
+// camera emoji particles
+for(let i=0;i<15;i++){
+    let cam=document.createElement("div");
+    cam.innerHTML="🎥";
+    cam.className="camera";
+    cam.style.left=Math.random()*100+"vw";
+    cam.style.animationDuration=(Math.random()*5+5)+"s";
+    document.body.appendChild(cam);
+}
+</script>
 </body>
 </html>
