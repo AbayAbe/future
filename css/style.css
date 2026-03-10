@@ -1,0 +1,120 @@
+body{
+background: linear-gradient(135deg,#ff9a9e,#fad0c4,#a18cd1);
+background-size: 400% 400%;
+animation: gradientMove 10s ease infinite;
+font-family:'Fredoka',sans-serif;
+text-align:center;
+margin:0;
+padding-top:80px;
+color:#1f2937;
+overflow-x:hidden;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+width:85%;
+max-width:700px;
+margin:auto;
+background:white;
+padding:45px;
+border-radius:25px;
+box-shadow:0 15px 35px rgba(0,0,0,0.2);
+border:4px solid #ffffff;
+}
+
+h1{
+font-family:'Press Start 2P',cursive;
+font-size:28px;
+margin-bottom:15px;
+color:#4f46e5;
+}
+
+h2{
+font-size:26px;
+color:#1f2937;
+}
+
+p{
+font-size:18px;
+line-height:1.6;
+}
+
+.progress{
+font-weight:bold;
+margin-bottom:20px;
+color:#6366f1;
+font-size:18px;
+}
+
+button{
+padding:14px 30px;
+font-size:18px;
+border:none;
+border-radius:14px;
+margin:10px;
+cursor:pointer;
+background:linear-gradient(135deg,#22c55e,#4ade80);
+color:white;
+font-weight:bold;
+transition:0.3s;
+box-shadow:0 6px 0 #15803d;
+}
+
+body{
+background-size:400% 400%;
+animation:gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+button:hover{
+transform:translateY(-3px);
+}
+
+button:active{
+transform:translateY(3px);
+box-shadow:0 2px 0 #15803d;
+}
+
+.noButton{
+background:linear-gradient(135deg,#ef4444,#f87171);
+box-shadow:0 6px 0 #991b1b;
+}
+
+.icon{
+font-size:65px;
+margin-bottom:10px;
+}
+
+.star{
+position:absolute;
+font-size:22px;
+animation:float 7s linear infinite;
+opacity:0.8;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-120px);}
+}
+
+.heart{
+position:absolute;
+font-size:30px;
+animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100px);}
+100%{transform:translateY(100vh);}
+}
+
