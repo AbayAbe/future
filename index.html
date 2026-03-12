@@ -1,42 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Mission Game</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="js/script.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-body {text-align:center; margin:0; padding-top:80px; font-family:'Fredoka',sans-serif; color:#1f2937; overflow-x:hidden;}
-.container{width:85%;max-width:700px;margin:auto;background:white;padding:45px;border-radius:25px;box-shadow:0 15px 35px rgba(0,0,0,0.2);}
-.character{font-size:80px; display:block; margin-bottom:20px; animation: floatChar 3s ease-in-out infinite alternate;}
-@keyframes floatChar{0%{transform:translateY(0);}100%{transform:translateY(-15px);}}
-#typedText{font-size:18px; line-height:1.6; margin-top:20px; min-height:60px;}
-button{padding:14px 30px; font-size:18px; border:none; border-radius:14px; margin:10px; cursor:pointer; background:linear-gradient(135deg,#22c55e,#4ade80); color:white; font-weight:bold; transition:0.3s; box-shadow:0 6px 0 #15803d;}
-button:hover{transform:translateY(-3px); box-shadow:0 6px 10px rgba(0,0,0,0.2);}
-@media(max-width:600px){.character{font-size:60px;}#typedText{font-size:16px;}button{font-size:16px;padding:12px 25px;}}
-.star{position:absolute; font-size:22px; animation:float 7s linear infinite; opacity:0.8;}
-@keyframes float{0%{transform:translateY(100vh);}100%{transform:translateY(-120px);}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Game - Level 0</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script src="js/script.js" defer></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-  <div class="character">🎮</div>
-  <h1>MISSION GAME</h1>
-  <p id="typedText"></p>
-  <div class="progress">LEVEL 0 / 4</div>
-  <a href="intro.html"><button>START GAME 🚀</button></a>
-</div>
+    <audio id="bgMusic" loop>
+        <source src="audio/romantic.mp3" type="audio/mpeg">
+    </audio>
 
-<script>
-// typing
-const text0="Selamat datang di game kecil yang aku buat khusus untuk kamu. Selesaikan semua level untuk membuka hadiah terakhir.";
-let j=0; const typedText0=document.getElementById("typedText");
-function type0(){if(j<text0.length){typedText0.innerHTML+=text0.charAt(j);j++;setTimeout(type0,40);}} type0();
+    <div class="container">
+        <div class="icon">🎮</div>
+        
+        <h1>MISSION GAME</h1>
+        
+        <p id="typedText"></p>
+        
+        <div class="progress">LEVEL 0 / 4</div>
+        
+        <button onclick="mulaiGame()">START GAME 🚀</button>
+    </div>
 
-// stars
-for(let i=0;i<15;i++){let star=document.createElement("div"); star.innerHTML="⭐"; star.className="star"; star.style.left=Math.random()*100+"vw"; star.style.animationDuration=(Math.random()*5+5)+"s"; document.body.appendChild(star);}
-</script>
+    <script>
+        // 1. Logic Efek Mengetik
+        const text0 = "Selamat datang di game kecil yang aku buat khusus untuk kamu. Selesaikan semua level untuk membuka hadiah terakhir.";
+        let j = 0; 
+        const typedText0 = document.getElementById("typedText");
+        
+        function type0(){
+            if(j < text0.length){
+                typedText0.innerHTML += text0.charAt(j);
+                j++;
+                setTimeout(type0, 45);
+            }
+        } 
+        window.onload = type0;
+
+        // 2. Logic Bintang (Hanya muncul di halaman ini)
+        for(let i=0; i<15; i++){
+            let star = document.createElement("div"); 
+            star.innerHTML = "⭐"; 
+            star.className = "star"; 
+            star.style.left = Math.random() * 100 + "vw"; 
+            star.style.animationDuration = (Math.random() * 5 + 5) + "s"; 
+            document.body.appendChild(star);
+        }
+
+        // 3. Logic Pindah Page & Musik
+        function mulaiGame() {
+            const music = document.getElementById("bgMusic");
+            
+            music.play().then(() => {
+                // Simpan status musik di browser
+                localStorage.setItem("musikAktif", "true");
+                localStorage.setItem("musicCurrentTime", 0);
+                
+                setTimeout(() => {
+                    window.location.href = "intro.html";
+                }, 500);
+            }).catch(error => {
+                console.log("Autoplay dicegah, memindahkan halaman...");
+                window.location.href = "intro.html";
+            });
+        }
+    </script>
 </body>
 </html>
