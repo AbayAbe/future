@@ -1,120 +1,139 @@
-body{
-background: linear-gradient(135deg,#ff9a9e,#fad0c4,#a18cd1);
-background-size: 400% 400%;
-animation: gradientMove 10s ease infinite;
-font-family:'Fredoka',sans-serif;
-text-align:center;
-margin:0;
-padding-top:80px;
-color:#1f2937;
-overflow-x:hidden;
+/* css/style.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
+    color: #1f2937;
+    overflow-x: hidden;
+    
+    /* 1. PENGATURAN BACKGROUND CANVA */
+    background-image: url('../img/my-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+    /* 2. FLEXBOX: Center konten di layar laptop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-@keyframes gradientMove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+/* 3. CONTAINER: Efek Glassmorphism */
+.container {
+    width: 85%;
+    max-width: 700px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.85); 
+    padding: 45px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
+    /* Penyesuaian: Transisi smooth untuk elemen di dalamnya */
+    transition: all 0.3s ease;
 }
 
-.container{
-width:85%;
-max-width:700px;
-margin:auto;
-background:white;
-padding:45px;
-border-radius:25px;
-box-shadow:0 15px 35px rgba(0,0,0,0.2);
-border:4px solid #ffffff;
+/* 4. DEKORASI HATI BESAR SAMPING */
+.side-heart {
+    position: fixed;
+    font-size: 120px;
+    z-index: 5;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.4));
+    pointer-events: none;
 }
 
-h1{
-font-family:'Press Start 2P',cursive;
-font-size:28px;
-margin-bottom:15px;
-color:#4f46e5;
+.left-heart {
+    left: 4vw;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: sideHeartPulse 2s ease-in-out infinite;
 }
 
-h2{
-font-size:26px;
-color:#1f2937;
+.right-heart {
+    right: 4vw;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: sideHeartPulse 2s ease-in-out infinite 1s;
 }
 
-p{
-font-size:18px;
-line-height:1.6;
+@keyframes sideHeartPulse {
+    0% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.15); }
+    100% { transform: translateY(-50%) scale(1); }
 }
 
-.progress{
-font-weight:bold;
-margin-bottom:20px;
-color:#6366f1;
-font-size:18px;
+@media (max-width: 1100px) {
+    .side-heart { display: none; }
 }
 
-button{
-padding:14px 30px;
-font-size:18px;
-border:none;
-border-radius:14px;
-margin:10px;
-cursor:pointer;
-background:linear-gradient(135deg,#22c55e,#4ade80);
-color:white;
-font-weight:bold;
-transition:0.3s;
-box-shadow:0 6px 0 #15803d;
+/* 5. MODAL STYLE (PENTING: Agar seragam di semua page) */
+.modal-overlay {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); 
+    z-index: 1000; 
+    justify-content: center; 
+    align-items: center;
+    backdrop-filter: blur(10px);
 }
 
-body{
-background-size:400% 400%;
-animation:gradientMove 12s ease infinite;
+.modal-box {
+    background: white; 
+    padding: 35px; 
+    border-radius: 25px; 
+    max-width: 450px; 
+    width: 85%;
+    text-align: center; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes gradientMove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* 6. BUTTONS & TYPOGRAPHY */
+h1 { font-family: 'Press Start 2P', cursive; font-size: 28px; margin-bottom: 15px; color: #4f46e5; }
+h2 { font-size: 26px; color: #1f2937; }
+p { font-size: 18px; line-height: 1.6; }
+
+button {
+    padding: 14px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 14px;
+    margin: 10px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 6px 0 #15803d;
 }
 
-button:hover{
-transform:translateY(-3px);
-}
+button:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+button:active { transform: translateY(3px); box-shadow: 0 2px 0 #15803d; }
 
-button:active{
-transform:translateY(3px);
-box-shadow:0 2px 0 #15803d;
-}
+.btn-modal-yes { background: #6366f1; box-shadow: 0 5px 0 #4338ca; }
+.btn-modal-no { background: #94a3b8; box-shadow: 0 5px 0 #64748b; }
 
-.noButton{
-background:linear-gradient(135deg,#ef4444,#f87171);
-box-shadow:0 6px 0 #991b1b;
-}
+.noButton { background: linear-gradient(135deg, #ef4444, #f87171); box-shadow: 0 6px 0 #991b1b; }
 
-.icon{
-font-size:65px;
-margin-bottom:10px;
-}
+.icon { font-size: 65px; margin-bottom: 10px; display: block; animation: heartbeat 1.5s infinite alternate; }
 
-.star{
-position:absolute;
-font-size:22px;
-animation:float 7s linear infinite;
-opacity:0.8;
-}
+@keyframes heartbeat { from { transform: scale(1); } to { transform: scale(1.1); } }
 
-@keyframes float{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-120px);}
-}
+/* 7. PARTICLES */
+.star, .heart, .particle { position: fixed; pointer-events: none; z-index: 1; }
+.star { font-size: 22px; animation: float 7s linear infinite; opacity: 0.8; }
 
-.heart{
-position:absolute;
-font-size:30px;
-animation:fall 5s linear infinite;
-}
-
-@keyframes fall{
-0%{transform:translateY(-100px);}
-100%{transform:translateY(100vh);}
-}
-
+@keyframes float { 0% { transform: translateY(110vh); } 100% { transform: translateY(-120px); } }
+.heart { font-size: 30px; animation: fall 5s linear infinite; }
+@keyframes fall { 0% { transform: translateY(-100px); } 100% { transform: translateY(110vh); } }
