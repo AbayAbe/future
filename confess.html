@@ -4,94 +4,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Level - Mission Complete</title>
+
+<link rel="stylesheet" href="css/style.css">
+<script src="js/script.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    margin: 0; padding: 0; font-family: 'Fredoka', sans-serif; text-align: center; overflow: hidden;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1);
-    background-size: 400% 400%;
-    animation: gradientMove 12s ease infinite;
-    display: flex; justify-content: center; align-items: center; min-height: 100vh;
-  }
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  /* Fade-in Teks */
+  #line1, #line2, #line3, #line4, #line5, #line6, #line7, #line8, #line9 { 
+    opacity: 0; transition: opacity 1.5s ease; margin: 15px 0; 
   }
 
-  .container {
-    width: 90%; max-width: 550px; background: rgba(255, 255, 255, 0.9);
-    padding: 40px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    position: relative; z-index: 10;
-  }
-
-  .character { font-size: 80px; animation: heartbeat 1.2s infinite alternate; }
-  @keyframes heartbeat { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-
-  #line1, #line2, #line3, #line4, #line5, #line6, #line7, #line8, #line9 { opacity: 0; transition: 1s; margin: 10px 0; }
-
-  /* Tombol Simetris */
+  .message-text { font-size: 16px; line-height: 1.8; color: #4b5563; }
+  
+  /* Wrapper Tombol */
   .btn-wrapper {
     display: flex; justify-content: center; align-items: center;
-    gap: 20px; margin-top: 30px; min-height: 50px; position: relative;
+    gap: 15px; margin-top: 30px; min-height: 60px; flex-wrap: wrap;
+    opacity: 0; transition: opacity 2s ease;
   }
-  button {
-    padding: 12px 25px; font-size: 18px; border: none; border-radius: 15px;
-    cursor: pointer; font-weight: bold; transition: 0.3s; color: white;
-  }
+
   .yesBtn { background: #22c55e; box-shadow: 0 5px 0 #15803d; }
-  .noBtn { background: #ef4444; box-shadow: 0 5px 0 #991b1b; position: relative; }
+  /* Tombol No tidak lagi melari, kita buat lebih statis & elegan */
+  .noBtn { background: #94a3b8; box-shadow: 0 5px 0 #475569; }
 
-  /* Modal Style */
-  #modal {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;
-    backdrop-filter: blur(8px);
-  }
-  #modalContent {
-    background: white; padding: 35px; border-radius: 25px; max-width: 400px;
-    text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
+  /* Modal Utama */
+  #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
+  #modalContent { background: white; padding: 35px; border-radius: 25px; max-width: 450px; width: 85%; text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  
   @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-  .poetic { font-style: italic; color: #555; line-height: 1.6; margin: 15px 0; }
-
-  .particle { position: fixed; top: -50px; pointer-events: none; animation: fall linear forwards; }
+  
+  .poetic { font-style: italic; color: #555; line-height: 1.8; margin: 20px 0; font-size: 15px; border-left: 3px solid #ec4899; padding-left: 15px; text-align: left; }
+  
+  .side-heart { position: fixed; font-size: 120px; z-index: 5; opacity: 0.8; filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.4)); pointer-events: none; top: 50%; transform: translateY(-50%); }
+  .left-heart { left: 4vw; animation: pulseHeart 2s ease-in-out infinite; }
+  .right-heart { right: 4vw; animation: pulseHeart 2s ease-in-out infinite 1s; }
+  @keyframes pulseHeart { 0%, 100% { transform: translateY(-50%) scale(1); } 50% { transform: translateY(-50%) scale(1.2); } }
+  @media (max-width: 1100px) { .side-heart { display: none; } }
+  .particle { position: fixed; top: -50px; pointer-events: none; animation: fall linear forwards; z-index: 100; }
   @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 </style>
 </head>
-<body onclick="playMusic()"> <audio id="bgMusic" loop>
+<body onclick="playMusic()">
+
+<div class="side-heart left-heart">❤️</div>
+<div class="side-heart right-heart">❤️</div>
+
+<audio id="bgMusic" loop>
   <source src="audio/romantic.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
   <div class="character">❤️</div>
-  <div style="font-family:'Press Start 2P'; font-size:10px; color:#6366f1;">FINAL LEVEL</div>
-  <h1 id="line1">Mission Complete!</h1>
-  <p id="line2">Delapan tahun tak bertemu, Delapan tahun juga ku mencarimu.</p>
-  <p id="line3">Tapi ku menemukanmu walau hanya dalam telfon genggamku</p>
-  <h2 id="line4" style="color: #ec4899;">Tahukah kamu fir, I Just Wanna Say I Love You ❤️</h2>
-  <p id="line5">Jadi, aku ingin bertanya satu hal terakhir.</p>
-  <p id="line6">Sebelumnya, hanya ada dua pilihan jika kamu pilih Ya, mungkin kedepannya akan terasa berat terutama karena jarak memisahkan kita, tapi fir selama itu bareng kamu terus kuyakin pasti jadi ringan & enjoy.</p>
-  <p id="line7">Tapi kalaupun kamu pilih Tidak, tak apa—aku tetap tersenyum dan menghargai setiap detik yang kita bagi, meski hanya lewat layar ini. 🌙❤️ .</p>
-  <p id="line8">Ingat juga fir jangan hanya karena kata terpaksa ataupun terlanjur itu memengaruhi kamu, semua pilihan ada di kamu.</p>
-  <h2 id="line9">Maukah kita mencoba jalan bersama?</h2>
+  <div class="progress" style="font-family:'Press Start 2P'; font-size:10px; color:#6366f1;">FINAL LEVEL</div>
+  
+  <h1 id="line1" style="font-family:'Press Start 2P'; font-size: 1.1rem;">Mission Complete!</h1>
+  
+  <p id="line2" class="message-text" style="font-style: italic;">Delapan tahun tak bertemu, delapan tahun juga ku mencarimu.</p>
+  <p id="line3" class="message-text" style="font-style: italic;">Tapi ku menemukanmu walau hanya dalam telfon genggamku. Tahukah kamu fir, I Just Wanna Say</p>
+  
+  <h2 id="line4" style="color: #ec4899; font-size: 1.4rem;"> I Love You ❤️</h2>
+  
+  <p id="line5" class="message-text" style="font-weight: bold;">Jadi, aku ingin bertanya satu hal terakhir.</p>
+  
+  <p id="line6" class="message-text">Sebelumnya, hanya ada dua pilihan. Jika kamu pilih <b>Ya</b>, mungkin ke depannya akan terasa berat terutama karena jarak memisahkan kita, tapi fir selama itu bareng kamu terus kuyakin pasti jadi ringan, enjoy, dan berwarna.</p>
+  
+  <p id="line7" class="message-text">Tapi kalaupun kamu pilih <b>Tidak</b>, tak apa aku tetap tersenyum dan menghargai setiap detik yang kita bagi, meski hanya lewat layar ini. 🌙❤️</p>
+  
+  <p id="line8" class="message-text" style="font-style: italic;">Ingat juga fir, jangan hanya karena kata terpaksa ataupun terlanjur itu memengaruhi kamu, semua pilihan ada di kamu.</p>
+  
+  <h2 id="line9" style="font-size: 1.3rem;">Maukah kita mencoba jalan bersama?</h2>
 
-  <div class="btn-wrapper">
+  <div class="btn-wrapper" id="buttonArea">
     <button class="yesBtn" onclick="showSuccess()">Mauww! ❤️</button>
-    <button class="noBtn" id="noBtn">Makasih Bar, Ngga dulu 🙃</button>
+    <button class="noBtn" onclick="showRespect()">Makasih Bar, Ngga dulu 🙃</button>
   </div>
 </div>
 
 <div id="modal">
   <div id="modalContent">
-    <h2 style="color: #ec4899;">Yay! Terima Kasih! ✨</h2>
-    <div class="poetic">
-        "Seperti bintang yang menemukan malamnya,<br>
-        seperti sajak yang menemukan nadanya.<br>
-        Terima kasih sudah bersedia melangkah bersamaku."
-    </div>
-    <p style="font-weight: bold;">📸 Screenshot ini & kirim ke aku ya!</p>
-    <button onclick="closeModal()" style="background: #6366f1; margin-top:10px; box-shadow: 0 5px 0 #4338ca;">Tutup</button>
+    <h2 id="modalTitle" style="color: #ec4899;"></h2>
+    <div id="modalBody" class="poetic"></div>
+    <p id="modalFooter" style="font-weight: bold; font-size: 14px; color: #4b5563;"></p>
+    <button onclick="closeModal()" id="modalBtn" style="background: #6366f1; margin-top:15px; box-shadow: 0 5px 0 #4338ca;">Tutup</button>
   </div>
 </div>
 
@@ -99,62 +94,80 @@
   const music = document.getElementById("bgMusic");
   let isPlaying = false;
 
-  // Fungsi untuk memutar musik
   function playMusic() {
     if (!isPlaying) {
-      music.play().catch(error => {
-        console.log("Autoplay dicegah oleh browser, menunggu interaksi.");
-      });
+      music.play().catch(error => console.log("Menunggu interaksi."));
       isPlaying = true;
     }
   }
 
-  // Fade in text satu persatu
-  const ids = ["line1","line2","line3","line4","line5","line6","line7","line8","line9"];
   window.onload = () => {
-    ids.forEach((id, i) => {
-      setTimeout(() => document.getElementById(id).style.opacity = 1, i * 1000);
-    });
-    // Coba putar otomatis
+    const savedTime = localStorage.getItem("musicCurrentTime");
+    if (savedTime) { music.currentTime = parseFloat(savedTime); }
+    music.volume = 0.5;
     playMusic();
+
+    const ids = ["line1","line2","line3","line4","line5","line6","line7","line8","line9"];
+    ids.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if(el) el.style.opacity = 1;
+      }, i * 1500);
+    });
+
+    setTimeout(() => {
+      document.getElementById("buttonArea").style.opacity = 1;
+    }, ids.length * 1500 + 500);
   };
 
-  // Tombol No Mengelak-ngelak secara lincah
-  const noBtn = document.getElementById("noBtn");
-  noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-    
-    noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-    noBtn.style.zIndex = "999";
-  });
-
+// Respon Jika Diterima (YES - Official Couple Version)
   function showSuccess() {
-    // Memperkuat volume saat "Yes" diklik
     music.volume = 1;
-    createParticles("❤️", 20);
-    createParticles("✨", 15);
+    createParticles("❤️", 30);
+    createParticles("✨", 20);
+    
+    document.getElementById("modalTitle").innerText = "Resmi, Bukan Lagi Tentang Aku atau Kamu ✨";
+    document.getElementById("modalTitle").style.color = "#ec4899";
+    
+    // Bahasa pengungkapan jadian yang lebih berkelas & menyentuh
+    document.getElementById("modalBody").innerHTML = `
+        "Terima kasih sudah bersedia menjadi jawaban atas pencarianku selama ini. <br><br>
+        Mulai detik ini, biarkan aku bersamamu bukan lagi sebagai sekadar teman, melainkan sebagai seseorang yang memiliki tempat istimewa di hidupku. <br><br>
+        Selamat datang di cerita baru kita, Fir. Aku sangat bahagia bisa bareng kamu sekarang."
+    `;
+    
+    document.getElementById("modalFooter").innerHTML = "📸 Screenshot ini & kirim ke aku ya, <br>sebagai tanda 'tanggal jadian' kita hari ini. ❤️";
+    document.getElementById("modalBtn").innerText = "I Love You, Fir ❤️";
     document.getElementById("modal").style.display = "flex";
   }
 
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
+  // Respon Jika Ditolak (NO - Versi Dewasa)
+  function showRespect() {
+    music.volume = 0.3; // Musik mengecil agar lebih syahdu
+    createParticles("🌙", 15);
+    
+    document.getElementById("modalTitle").innerText = "Terima Kasih Atas Kejujuranmu, Fir 🌙";
+    document.getElementById("modalTitle").style.color = "#64748b";
+    document.getElementById("modalBody").innerHTML = `"Mencintaimu adalah bagian terindah dalam perjalananku, dan menerimamu apa adanya, termasuk keputusanmu adalah cara terakhirku untuk menghargaimu.<br><br>Aku tetap bersyukur delapan tahun mencarimu berujung pada percakapan ini."`;
+    document.getElementById("modalFooter").innerHTML = "Terima kasih sudah mau bermain sampai akhir. <br>Aku tetap di sini jika kamu butuh teman cerita.";
+    document.getElementById("modalBtn").innerText = "Tutup 🌙";
+    document.getElementById("modalBtn").style.background = "#94a3b8";
+    document.getElementById("modalBtn").style.boxShadow = "0 5px 0 #475569";
+    document.getElementById("modal").style.display = "flex";
   }
+
+  function closeModal() { document.getElementById("modal").style.display = "none"; }
 
   function createParticles(emoji, count) {
     for (let i = 0; i < count; i++) {
-      let p = document.createElement("div");
-      p.innerHTML = emoji;
-      p.className = "particle";
-      p.style.left = Math.random() * 100 + "vw";
-      p.style.fontSize = (Math.random() * 20 + 20) + "px";
-      p.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      document.body.appendChild(p);
+      let p = document.createElement("div"); p.innerHTML = emoji; p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw"; p.style.fontSize = (Math.random() * 20 + 20) + "px";
+      p.style.animationDuration = (Math.random() * 3 + 2) + "s"; document.body.appendChild(p);
       setTimeout(() => p.remove(), 5000);
     }
   }
+
+  setInterval(() => { if(!music.paused) { localStorage.setItem("musicCurrentTime", music.currentTime); } }, 500);
 </script>
 
 </body>
