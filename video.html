@@ -1,56 +1,181 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Level 2 - Memory Unlock</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="js/script.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-body{text-align:center;margin:0;padding-top:80px;font-family:'Fredoka',sans-serif;color:#1f2937;overflow-x:hidden;}
-.container{width:85%;max-width:700px;margin:auto;background:white;padding:45px;border-radius:25px;box-shadow:0 15px 35px rgba(0,0,0,0.2);}
-.character{font-size:80px; display:block;margin-bottom:20px;animation: floatChar 3s ease-in-out infinite alternate;}
-@keyframes floatChar{0%{transform:translateY(0);}100%{transform:translateY(-15px);}}
-#typedText{font-size:18px; line-height:1.6;margin-top:20px;min-height:60px;}
-button{padding:14px 30px; font-size:18px; border:none; border-radius:14px; margin:10px; cursor:pointer; background:linear-gradient(135deg,#22c55e,#4ade80); color:white; font-weight:bold; transition:0.3s; box-shadow:0 6px 0 #15803d;}
-button:hover{transform:translateY(-3px); box-shadow:0 6px 10px rgba(0,0,0,0.2);}
-@media(max-width:600px){.character{font-size:60px;}#typedText{font-size:16px;}button{font-size:16px;padding:12px 25px;}}
-.camera{position:absolute;font-size:25px; animation:camMove linear infinite; opacity:0.8;}
-@keyframes camMove{0%{transform:translateY(100vh) rotate(0deg);}100%{transform:translateY(-120px) rotate(360deg);}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3 - Secret Song</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script src="js/script.js" defer></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* Style Tambahan Khusus Halaman Ini (Modal) */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .modal-box {
+            background: white; padding: 35px; border-radius: 25px; max-width: 450px; width: 85%;
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .modal-text { font-size: 16px; line-height: 1.6; color: #4b5563; margin-bottom: 25px; }
+        .modal-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        
+        .btn-modal-yes { background: #6366f1; box-shadow: 0 5px 0 #4338ca; color: white; border:none; padding: 12px 20px; border-radius: 12px; cursor:pointer; font-weight:bold; }
+        .btn-modal-no { background: #94a3b8; box-shadow: 0 5px 0 #64748b; color: white; border:none; padding: 12px 20px; border-radius: 12px; cursor:pointer; font-weight:bold; }
+        
+        #typedText { min-height: 60px; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+  <source src="audio/romantic.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
-  <div class="character">🎬</div>
-  <div class="progress">Level 2 / 4</div>
-  <h2>Memory Unlock</h2>
-  <p id="typedText"></p>
+    <div class="character">🎵</div>
+    <div class="progress">LEVEL 3 / 4</div>
+    <h2>Secret Song</h2>
+    
+    <p id="typedText"></p>
 
-  <a href="https://drive.google.com/drive/u/0/folders/1Fo58Qr3IgZCwRKWfbdZ2fbXeai2oRrcB" target="_blank">
-    <button>Tonton Video 🎥</button>
-  </a>
+    <div style="margin: 20px 0;">
+        <h1 style="color: #ec4899; font-size: 2rem; letter-spacing: 5px;">PARAH</h1>
+        <p style="font-weight: bold; color: #6b7280; margin: 5px 0;">atau</p>
+        <h1 style="color: #ec4899; font-size: 2rem; letter-spacing: 5px;">HARAP</h1>
+        <p style="font-style: italic; margin-top: 10px; color: #4b5563;">"Tergantung bagaimana cerita kita nanti."</p>
+    </div>
 
-  <br><br>
-  <a href="lagu.html">
-    <button>Level Selesai ➜</button>
-  </a>
+    <div style="margin-top: 25px;">
+        <a href="https://www.instagram.com/reel/C2mQoZJyYdL/?igsh=ajljc2hpODlyeW1t" target="_blank" onclick="pelankanMusik()">
+            <button style="background: linear-gradient(135deg, #f472b6, #ec4899); box-shadow: 0 6px 0 #be185d;">Dengar Lagu 🎧</button>
+        </a>
+    </div>
+
+    <div style="margin-top: 15px;">
+        <button class="btn-final" onclick="checkReady()" style="background: linear-gradient(135deg, #ec4899, #db2777); box-shadow: 0 6px 0 #9d174d;">Masuk Final Level ✨</button>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal-overlay">
+    <div class="modal-box">
+        <h2 style="color: #4f46e5; font-size: 1.2rem; margin-bottom: 15px;">Sebentar, Fir...</h2>
+        <p class="modal-text">
+            Level selanjutnya adalah level terakhir. Di sana ada sesuatu yang sangat jujur yang ingin aku sampaikan setelah 8 tahun ini. Bahkan sudah 10 tahun ya hehe <br><br>
+            Kamu benar-benar yakin ingin membukanya sekarang, atau mau cukup sampai di sini saja?
+        </p>
+        <div class="modal-btns">
+            <button class="btn-modal-yes" onclick="showDoubleCheck()">Aku yakin, lanjut ❤️</button>
+            <button class="btn-modal-no" onclick="showFarewell()">Cukup sampai sini 🌙</button>
+        </div>
+    </div>
+</div>
+
+<div id="doubleCheckModal" class="modal-overlay">
+    <div class="modal-box" style="border: 2px solid #ec4899;">
+        <h2 style="color: #ec4899; font-size: 1.2rem; margin-bottom: 15px;">Benar-benar yakin?</h2>
+        <p class="modal-text">
+            Aku nggak mau kamu merasa terpaksa. Setelah ini, nggak ada jalan kembali ke level sebelumnya. <br><br>
+            Siap untuk melihat akhirnya?
+        </p>
+        <div class="modal-btns">
+            <button class="btn-modal-yes" onclick="keFinalLevel()" style="background: #ec4899; box-shadow: 0 5px 0 #be185d;">Iya, aku siap ✨</button>
+            <button class="btn-modal-no" onclick="closeAllModals()">Pikir-pikir dulu</button>
+        </div>
+    </div>
+</div>
+
+<div id="farewellModal" class="modal-overlay">
+    <div class="modal-box">
+        <h2 style="color: #64748b; font-size: 1.2rem; margin-bottom: 15px;">Terima Kasih, Fir</h2>
+        <p class="modal-text">
+            Aku hargai keputusanmu. Terima kasih sudah mau meluangkan waktu bermain sampai level ini dan mendengarkan laguku. <br><br>
+            Apapun itu, aku tetap senang bisa menemukanmu kembali. 🌙✨
+        </p>
+        <div class="modal-btns">
+            <button class="btn-modal-no" onclick="closeAllModals()">Tutup & Dengar Lagu Lagi</button>
+        </div>
+    </div>
 </div>
 
 <script>
-// typing
-const text2="Di level ini kamu harus membuka sebuah kenangan lama. Aku udah ngebuat video ini dari lama, tapi aku gatau sebenernya bisa gak sampai ke kamu.";
-let k=0; const typedText2=document.getElementById("typedText");
-function type2(){if(k<text2.length){typedText2.innerHTML+=text2.charAt(k);k++;setTimeout(type2,40);}} type2();
+const music = document.getElementById("bgMusic");
 
-// camera emoji particles
-for(let i=0;i<15;i++){
-    let cam=document.createElement("div");
-    cam.innerHTML="🎥";
-    cam.className="camera";
-    cam.style.left=Math.random()*100+"vw";
-    cam.style.animationDuration=(Math.random()*5+5)+"s";
-    document.body.appendChild(cam);
+window.onload = () => {
+    // Sinkronisasi Musik
+    const savedTime = localStorage.getItem("musicCurrentTime");
+    if (savedTime) {
+        music.currentTime = parseFloat(savedTime);
+    }
+    music.volume = 0.5;
+    music.play().catch(() => console.log("Menunggu interaksi..."));
+    
+    type3();
+};
+
+// Update waktu musik
+setInterval(() => {
+    if(!music.paused) {
+        localStorage.setItem("musicCurrentTime", music.currentTime);
+    }
+}, 1000);
+
+function pelankanMusik() { music.volume = 0.1; }
+
+// LOGIKA MODAL
+function checkReady() {
+    document.getElementById("confirmModal").style.display = "flex";
+}
+
+function showDoubleCheck() {
+    closeAllModals();
+    document.getElementById("doubleCheckModal").style.display = "flex";
+}
+
+function showFarewell() {
+    closeAllModals();
+    document.getElementById("farewellModal").style.display = "flex";
+}
+
+function closeAllModals() {
+    document.getElementById("confirmModal").style.display = "none";
+    document.getElementById("doubleCheckModal").style.display = "none";
+    document.getElementById("farewellModal").style.display = "none";
+}
+
+function keFinalLevel() {
+    localStorage.setItem("musicCurrentTime", music.currentTime);
+    window.location.href = "confess.html";
+}
+
+// Efek Mengetik
+const text3="Aku juga pernah membuat lagu. Judulnya bisa jadi PARAH atau HARAP. Teman-temanku sudah tau lagu ini karena udah kubuat dari pertama kali aku dibuat merasakan perasaan yang udah lama ga kurasakan dan sekaligus juga perasaan kecewa yang tidak bisa terucap saat itu, tapi mereka gapernah tau lagu ini ditujukan untuk siapa hehe, bahkan kamu sendiri. Pada saat buat lagu itu memang PARAH karena kamu tau sendiri lah hehe, tapi untuk kedepannya tergantung bagaimana cerita kita nanti.";
+let i3=0; 
+const typedText3 = document.getElementById("typedText");
+function type3(){
+    if(i3 < text3.length){
+        typedText3.innerHTML += text3.charAt(i3);
+        i3++;
+        setTimeout(type3, 45);
+    }
+}
+
+// Partikel Not Musik
+for(let i=0; i<12; i++){
+    let note = document.createElement("div");
+    note.innerHTML = "🎶";
+    note.className = "star";
+    note.style.left = Math.random() * 100 + "vw";
+    note.style.animationDuration = (Math.random() * 5 + 5) + "s";
+    document.body.appendChild(note);
 }
 </script>
 </body>
